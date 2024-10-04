@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main() {
     // Declaramos la matriz de 5 estudiantes y 3 materias
@@ -10,17 +11,30 @@ int main() {
     float notaB_est[5];
     float notaA_mat[3];
     float notaB_mat[3];
+    char nombres[5][20];  // Arreglo para guardar los nombres de los estudiantes
+
+    // Leer los nombres de los estudiantes
+    printf("Ingresa los nombres de 5 estudiantes:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Estudiante %d: ", i + 1);
+        fgets(nombres[i], 20, stdin);
+        // Eliminar el salto de línea al final de la cadena si es necesario
+        size_t len = strlen(nombres[i]);
+        if (len > 0 && nombres[i][len - 1] == '\n') {
+            nombres[i][len - 1] = '\0';
+        }
+    }
 
     // Pedir al usuario que ingrese las calificaciones
-    printf("Ingresa las calificaciones para 5 estudiantes y 3 materias (solo entre 0 y 10):\n");
+    printf("\nIngresa las calificaciones para 3 materias (solo entre 0 y 10):\n");
 
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 3; j++) {
             do {
                 // Modificar el nombre de las materias en la entrada
-                if (j == 0) printf("Estudiante %d, Matemáticas: ", i + 1);
-                if (j == 1) printf("Estudiante %d, Lenguaje: ", i + 1);
-                if (j == 2) printf("Estudiante %d, Física: ", i + 1);
+                if (j == 0) printf("%s, Matemáticas: ", nombres[i]);
+                if (j == 1) printf("%s, Lenguaje: ", nombres[i]);
+                if (j == 2) printf("%s, Física: ", nombres[i]);
 
                 scanf("%f", &calificaciones[i][j]);
 
@@ -76,7 +90,7 @@ int main() {
     // Imprimir las calificaciones, promedios y resultados
     printf("\nEstudiante\tMatemáticas\tLenguaje\tFísica\t\tPromedio\n");
     for (int i = 0; i < 5; i++) {
-        printf("\t%d\t\t", i + 1);
+        printf("%s\t\t", nombres[i]);
         for (int j = 0; j < 3; j++) {
             printf("%.2f\t\t", calificaciones[i][j]);
         }
@@ -92,7 +106,7 @@ int main() {
     // Imprimir la tabla de aprobación o reprobación por materia para cada estudiante
     printf("\nEstudiante\tMatemáticas\tLenguaje\tFísica\n");
     for (int i = 0; i < 5; i++) {
-        printf("\t%d\t\t", i + 1);
+        printf("%s\t\t", nombres[i]);
         for (int j = 0; j < 3; j++) {
             if (resultado[i][j] == 'A') {
                 printf("Aprobado\t");
@@ -106,7 +120,7 @@ int main() {
     // Imprimir las notas mayor y menor de cada estudiante
     printf("\nEstudiante\tNota Mayor\tNota Menor\n");
     for (int i = 0; i < 5; i++) {
-        printf("\t%d\t\t%.2f\t\t%.2f\n", i + 1, notaA_est[i], notaB_est[i]);
+        printf("%s\t\t%.2f\t\t%.2f\n", nombres[i], notaA_est[i], notaB_est[i]);
     }
 
     // Imprimir las notas mayor y menor de cada materia
